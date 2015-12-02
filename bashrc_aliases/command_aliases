@@ -4,7 +4,7 @@ gcommit() {
 	read gitcommitmssg
 
 	if [ "$gitcommitmssg" != "" ]; then 
-		git commit -m '$gitcommitmssg'
+		git commit -m "$gitcommitmssg"
 	else 
 		echo "ERROR: Git commit message is required."
 	fi
