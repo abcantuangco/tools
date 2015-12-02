@@ -1,0 +1,67 @@
+# GIT
+gcommit() {
+	echo "Please enter git commit message [MESSAGE]: "
+	read gitcommitmssg
+
+	if [ "$gitcommitmssg" != "" ]; then 
+		git commit -m '$gitcommitmssg'
+	else 
+		echo "ERROR: Git commit message is required."
+	fi
+}
+gmerge() {
+	echo "Please enter git branch [BRANCH_NAME]: "
+	read gitbranch
+
+	if [ "$gitbranch" != "" ]; then 
+		git merge $gitbranch
+	else 
+		echo "ERROR: Git branch name is required."
+	fi
+}
+gpull() {
+	echo "Please enter git branch [BRANCH_NAME]: "
+	read gitbranch
+
+	if [ "$gitbranch" != "" ]; then 
+		git pull origin $gitbranch
+	else 
+		echo "ERROR: Git branch name is required."
+	fi
+}
+gpush() {
+	echo "Please enter git branch [BRANCH_NAME]: "
+	read gitbranch
+
+	if [ "$gitbranch" != "" ]; then 
+		git push origin $gitbranch
+	else 
+		echo "ERROR: Git branch name is required."
+	fi
+}
+gclone() {
+	echo "Please enter git url [GIT CLONE URL]: "
+	read giturl
+
+	echo "Please enter folder name to clone [FOLDER_NAME]: "
+	read foldername
+
+	if [ "$giturl" != "" ]; then 
+		if [ "$foldername" != "" ]; then 
+			git clone $giturl $foldername
+		else 
+			git clone $giturl '.'
+		fi
+	else 
+		echo "ERROR: Git URL is required."
+	fi
+}
+alias fetch='git fetch --all'
+alias add='git add . && git add -u'
+alias update='git add . && git add -u'
+alias status='git status'
+alias pull=gpull
+alias push=gpush
+alias commit=gcommit
+alias merge=gmerge
+alias clone=gclone
