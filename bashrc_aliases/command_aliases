@@ -20,20 +20,20 @@ gmerge() {
 	fi
 }
 gpull() {
-	echo "Please enter git branch [BRANCH_NAME]: "
-	read gitbranch
+	gitbranch=$(git rev-parse --abbrev-ref HEAD)
 
 	if [ "$gitbranch" != "" ]; then 
+		echo "You're pulling from: $gitbranch ."
 		git pull origin $gitbranch
 	else 
 		echo "ERROR: Git branch name is required."
 	fi
 }
 gpush() {
-	echo "Please enter git branch [BRANCH_NAME]: "
-	read gitbranch
+	gitbranch=$(git rev-parse --abbrev-ref HEAD)
 
 	if [ "$gitbranch" != "" ]; then 
+		echo "You're pushing to: $gitbranch ."
 		git push origin $gitbranch
 	else 
 		echo "ERROR: Git branch name is required."
