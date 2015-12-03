@@ -1,5 +1,8 @@
 # GIT
 gcommit() {
+	echo -e "\e[92m--- GIT COMMIT ---\e[0m"
+	gitbranch=$(git rev-parse --abbrev-ref HEAD)
+	echo "You're committing on this branch: [$gitbranch]"
 	echo "Please enter git commit message [MESSAGE]: "
 	read gitcommitmssg
 
@@ -10,8 +13,11 @@ gcommit() {
 	fi
 }
 gmerge() {
+	echo -e "\e[92m--- GIT MERGE ---\e[0m"
+	echo "LOCAL BRANCHES"
+	git branch -l
 	echo "Please enter git branch [BRANCH_NAME]: "
-	read gitbranch
+	read -e gitbranch
 
 	if [ "$gitbranch" != "" ]; then 
 		git merge $gitbranch
@@ -20,26 +26,29 @@ gmerge() {
 	fi
 }
 gpull() {
+	echo -e "\e[92m--- GIT PULL ---\e[0m"
 	gitbranch=$(git rev-parse --abbrev-ref HEAD)
 
 	if [ "$gitbranch" != "" ]; then 
-		echo "You're pulling from: $gitbranch ."
+		echo "You're pulling from: [$gitbranch]"
 		git pull origin $gitbranch
 	else 
 		echo "ERROR: Git branch name is required."
 	fi
 }
 gpush() {
+	echo -e "\e[92m--- GIT PUSH ---\e[0m"
 	gitbranch=$(git rev-parse --abbrev-ref HEAD)
 
 	if [ "$gitbranch" != "" ]; then 
-		echo "You're pushing to: $gitbranch ."
+		echo "You're pushing to: [$gitbranch]"
 		git push origin $gitbranch
 	else 
 		echo "ERROR: Git branch name is required."
 	fi
 }
 gclone() {
+	echo -e "\e[92m--- GIT CLONE ---\e[0m"
 	echo "Please enter git url [GIT CLONE URL]: "
 	read giturl
 
@@ -56,6 +65,20 @@ gclone() {
 		echo "ERROR: Git URL is required."
 	fi
 }
+gcheckout() {
+	echo -e "\e[92m--- GIT CHECKOUT ---\e[0m"
+	echo "LOCAL BRANCHES"
+	git branch -l
+	echo "Please enter git branch [BRANCH_NAME]: "
+	read -e gitbranch
+
+	if [ "$gitbranch" != "" ]; then 
+		git checkout $gitbranch
+	else 
+		echo "ERROR: Git branch name is required."
+	fi
+}
+
 alias fetch='git fetch --all'
 alias add='git add . && git add -u'
 alias update='git add . && git add -u'
@@ -65,3 +88,4 @@ alias push=gpush
 alias commit=gcommit
 alias merge=gmerge
 alias clone=gclone
+alias checkout=gcheckout
