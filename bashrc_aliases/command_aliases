@@ -4,7 +4,7 @@ gcommit() {
 	gitbranch=$(git rev-parse --abbrev-ref HEAD)
 	echo "You're committing on this branch: [$gitbranch]"
 	echo "Please enter git commit message [MESSAGE]: "
-	read gitcommitmssg
+	read -e gitcommitmssg
 
 	if [ "$gitcommitmssg" != "" ]; then 
 		git commit -m "$gitcommitmssg"
@@ -50,10 +50,10 @@ gpush() {
 gclone() {
 	echo -e "\e[92m--- GIT CLONE ---\e[0m"
 	echo "Please enter git url [GIT CLONE URL]: "
-	read giturl
+	read -e giturl
 
 	echo "Please enter folder name to clone [FOLDER_NAME]: "
-	read foldername
+	read -e foldername
 
 	if [ "$giturl" != "" ]; then 
 		if [ "$foldername" != "" ]; then 
@@ -78,7 +78,47 @@ gcheckout() {
 		echo "ERROR: Git branch name is required."
 	fi
 }
+gdeletebranch() {
+	echo -e "\e[92m--- GIT DELETE BRANCH [local] ---\e[0m"
+	echo "LOCAL BRANCHES"
+	git branch -l
+	echo "Please enter git branch [BRANCH_NAME]: "
+	read -e gitbranch
 
+	if [ "$gitbranch" != "" ]; then 
+		git branch -D $gitbranch
+	else 
+		echo "ERROR: Git branch name is required."
+	fi
+}
+gcreatebranch() {
+	echo -e "\e[92m--- GIT CREATE BRANCH ---\e[0m"
+	echo "Please enter git branch [BRANCH_NAME]: "
+	read -e gitbranch
+
+	if [ "$gitbranch" != "" ]; then 
+		git checkout -b $gitbranch
+	else 
+		echo "ERROR: Git branch name is required."
+	fi
+}
+gclean() {
+	echo -e "\e[92m--- GIT CLEAN ---\e[0m"
+	cleanlist=$(git ls-files . --exclude-standard --others)
+	if [ -z "$cleanlist" ]; then
+		echo "No files to clean."
+	else
+		git clean -n
+		echo "Do you want to continue removing listed files (default:no) [y/n]: "
+		read -e confirmdelete
+
+		if [ "$confirmdelete" == "y" ]; then 
+			git clean -df
+		else 
+			echo "Untracked files were not deleted."
+		fi
+	fi
+}
 alias fetch='git fetch --all'
 alias add='git add . && git add -u'
 alias update='git add . && git add -u'
@@ -89,3 +129,7 @@ alias commit=gcommit
 alias merge=gmerge
 alias clone=gclone
 alias checkout=gcheckout
+alias deletebr=gdeletebranch
+alias createbr=gcreatebranch
+alias mergetool="git mergetool"
+alias clean=gclean
