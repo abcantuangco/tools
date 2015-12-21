@@ -69,7 +69,7 @@ gcheckout() {
 	echo -e "\e[92m--- GIT CHECKOUT ---\e[0m"
 	echo "LOCAL BRANCHES"
 	git branch -l
-	echo "Please enter git branch [BRANCH_NAME]: "
+	echo "Please enter git branch [BRANCH_NAME or PATH/TO/SPECIFIC_FILE]: "
 	read -e gitbranch
 
 	if [ "$gitbranch" != "" ]; then 
