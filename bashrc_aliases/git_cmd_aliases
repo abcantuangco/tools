@@ -65,18 +65,23 @@ gclone() {
 		echo "ERROR: Git URL is required."
 	fi
 }
-gcheckout() {
-	echo -e "\e[92m--- GIT CHECKOUT ---\e[0m"
-	echo "LOCAL BRANCHES"
-	git branch -l
-	echo "Please enter git branch [BRANCH_NAME or PATH/TO/SPECIFIC_FILE]: "
-	read -e gitbranch
+checkout() {
+    echo -e "\e[92m--- GIT CHECKOUT ---\e[0m"
+    echo "LOCAL BRANCHES"
+    git branch -l
 
-	if [ "$gitbranch" != "" ]; then 
-		git checkout $gitbranch
-	else 
-		echo "ERROR: Git branch name is required."
-	fi
+    gitbranch=$1
+
+    if [ "$gitbranch" == "" ]; then 
+        echo "Please enter git branch [BRANCH_NAME or PATH/TO/SPECIFIC_FILE]: "
+        read -e gitbranch
+    fi
+
+    if [ "$gitbranch" != "" ]; then 
+        git checkout $gitbranch
+    else 
+        echo "ERROR: Git branch name is required."
+    fi
 }
 gdeletebranch() {
 	echo -e "\e[92m--- GIT DELETE BRANCH [local] ---\e[0m"
@@ -128,7 +133,6 @@ alias push=gpush
 alias commit=gcommit
 alias merge=gmerge
 alias clone=gclone
-alias checkout=gcheckout
 alias deletebr=gdeletebranch
 alias createbr=gcreatebranch
 alias mergetool="git mergetool"
