@@ -11,7 +11,14 @@ var diff = 0;
 arrayName.sort(function(a, b) {
     diff = parseInt(a.value) - parseInt(b.value);
     if (diff === 0) {
-        diff = a.string < b.string; // use the less than approach since we use reverse()
+        // use the inverse approach since we use reverse()
+        if (a.string.toLowerCase() > b.string.toLowerCase()) {
+            diffs = -1;
+        } else if (a.string.toLowerCase() < b.string.toLowerCase()) {
+            diffs = 1;
+        } else {
+            diffs = 0;
+        }
     }
     return diff;
 });
