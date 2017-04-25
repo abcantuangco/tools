@@ -124,6 +124,12 @@ gclean() {
 		fi
 	fi
 }
+getbuild() {
+	git log --pretty=format:'%h' -n 1 | clip
+
+	last_commit=$(git log --pretty=format:'%h' -n 1)
+	echo "Build No: $last_commit"
+}
 alias fetch='git fetch --all'
 alias add='git add . && git add -u'
 alias update='git add . && git add -u'
@@ -137,3 +143,4 @@ alias deletebr=gdeletebranch
 alias createbr=gcreatebranch
 alias mergetool="git mergetool"
 alias clean=gclean
+alias buildno=getbuild
