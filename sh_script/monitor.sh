@@ -75,5 +75,5 @@ if [ "$response_code" != "200" ] || [ "$response_code" == "" ] ; then
         fi
     done
 else
-    show_message "Mongo DB is running fine."
+    show_message "Your service is running fine."
 fi
